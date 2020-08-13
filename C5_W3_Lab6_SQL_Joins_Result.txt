@@ -1,0 +1,43 @@
+Q1A :
+select E.F_NAME, E.L_NAME, DEP_ID, J.START_DATE 
+	from EMPLOYEES E inner join JOB_HISTORY J 
+	on E.JOB_ID = J.JOBS_ID where DEP_ID = 5  ;
+
+Q1B :
+select E.F_NAME, E.L_NAME, DEP_ID, J.START_DATE, JS.JOB_TITLE from EMPLOYEES E 
+	inner join JOB_HISTORY J ON E.JOB_ID = J.JOBS_ID
+	inner join JOBS JS ON J.JOBS_ID = JS.JOB_IDENT
+	where DEP_ID = 5 ;
+
+Q2A :			
+select E.EMP_ID, E.L_NAME, E.DEP_ID, D.DEP_NAME from EMPLOYEES E
+	left join DEPARTMENTS  D ON E.DEP_ID = D.DEPT_ID_DEP ;
+
+Q2B :			
+select E.EMP_ID, E.L_NAME, E.DEP_ID, D.DEP_NAME from EMPLOYEES E
+	left join DEPARTMENTS  D ON E.DEP_ID = D.DEPT_ID_DEP 
+	where year(B_DATE) < 1980 ;
+
+Q2C :			
+select E.EMP_ID, E.L_NAME, E.DEP_ID, D.DEP_NAME from EMPLOYEES E
+	left join DEPARTMENTS  D ON E.DEP_ID = D.DEPT_ID_DEP
+	and D.DEP_NAME in (select DEP_NAME from DEPARTMENTS where year(B_DATE) < 1980)  ;
+
+Q2C (other version) :			
+select E.EMP_ID, E.L_NAME, E.DEP_ID, D.DEP_NAME from EMPLOYEES E
+	left join DEPARTMENTS  D ON E.DEP_ID = D.DEPT_ID_DEP
+	and year(E.B_DATE) < 1980 ;
+
+Q3A :			
+select E.F_NAME, E.L_NAME, D.DEP_NAME from EMPLOYEES E
+	full join DEPARTMENTS D on E.DEP_ID = D.DEPT_ID_DEP ;
+
+Q3B :		
+select E.F_NAME, E.L_NAME,  D.DEPT_ID_DEP, D.DEP_NAME from EMPLOYEES E
+	full join DEPARTMENTS D on E.DEP_ID = D.DEPT_ID_DEP 
+	and D.DEPT_ID_DEP in (select DEPT_ID_DEP from DEPARTMENTS where SEX = 'M') ;
+
+Q3B (other version) :
+select E.F_NAME, E.L_NAME,  D.DEPT_ID_DEP, D.DEP_NAME from EMPLOYEES E
+	full join DEPARTMENTS D on E.DEP_ID = D.DEPT_ID_DEP 
+	and E.SEX = 'M' ;
